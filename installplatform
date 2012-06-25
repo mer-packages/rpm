@@ -126,6 +126,9 @@ for SUBST in $SUBSTS ; do
   redhat)
     VENDORSED='-e s,^@redhat@,,'
     ;;
+  meego)
+    VENDORSED='-e s,^@meego@,,'
+    ;;
   apple)
     VENDORSED='-e s,^@apple@,,'
     ;;

@@ -830,6 +830,7 @@ unknown|pc|ibm|redhat|pld|mandrake|conectiva|lvr|yellowdog|caos|suse)
 	test -f /etc/redhat-release &&		RPMCANONVENDOR=redhat
 	test -f /etc/SuSE-release &&		RPMCANONVENDOR=suse
 	test -f /etc/pld-release &&		RPMCANONVENDOR=pld
+	test -f /etc/meego-release &&		RPMCANONVENDOR=meego
 	test -f /etc/mandrake-release &&	RPMCANONVENDOR=mandrake
 	test -f /etc/conectiva-release &&	RPMCANONVENDOR=conectiva
 	test -f /etc/lvr-release &&		RPMCANONVENDOR=lvr

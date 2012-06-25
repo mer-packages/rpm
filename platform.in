@@ -76,6 +76,26 @@
 @redhat@#%defattr(-,root,root,-)\
 @redhat@#%{nil}
 
+@meego@#---------------------------------------------------------------------
+@meego@#	Expanded at end of %prep
+@meego@#
+@meego@%__id_u		@__ID_U@
+@meego@%__chown_Rhf	@__CHOWN_RHF@
+@meego@%__chgrp_Rhf	@__CHGRP_RHF@
+@meego@%_fixperms	%{__chmod} -Rf @FIXPERMS@
+@meego@%__os_install_post    \
+@meego@    %{_rpmconfigdir}/brp-compress \
+@meego@    %{_rpmconfigdir}/brp-strip %{__strip} \
+@meego@    %{_rpmconfigdir}/brp-strip-static-archive %{__strip} \
+@meego@    %{_rpmconfigdir}/brp-strip-comment-note %{__strip} %{__objdump} \
+@meego@    %{_rpmconfigdir}/meego/find-docs.sh %{buildroot}\
+@meego@%{nil}
+@meego@#---------------------------------------------------------------------
+@meego@#	Always use %defattr(-,root,root) in %files (added in rpm-4.0.4)
+@meego@#
+@meego@#%files(n:f:)	%%files%{?-f: -f %{-f*}}%{?-n: -n %{-n*}} %{?1}\
+@meego@#%defattr(-,root,root,-)\
+@meego@#%{nil}
 
 @apple@#---------------------------------------------------------------------
 @apple@#	Apple Darwin vendor specific macros
