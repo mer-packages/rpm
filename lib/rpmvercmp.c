@@ -33,11 +33,15 @@ int rpmvercmp(const char * a, const char * b)
 
     /* loop through each version segment of str1 and str2 and compare them */
     while (*one && *two) {
-	while (*one && !risalnum(*one)) one++;
-	while (*two && !risalnum(*two)) two++;
+	while (*one && !risalnum(*one) && *one != '~') one++;
+	while (*two && !risalnum(*two) && *two != '~') two++;
 
 	/* If we ran to the end of either, we are finished with the loop */
 	if (!(*one && *two)) break;
+
+	/* If exactly one side has a tilde, it is decided. */
+	if ((*one == '~') ^ (*two == '~'))
+		break;
 
 	str1 = one;
 	str2 = two;
@@ -103,6 +107,11 @@ int rpmvercmp(const char * a, const char * b)
     /* this catches the case where all numeric and alpha segments have */
     /* compared identically but the segment sepparating characters were */
     /* different */
+    if (*two == '~')
+	return 1;
+    else if (*one == '~')
+	return -1;
+
     if ((!*one) && (!*two)) return 0;
 
     /* whichever version still has characters left over wins */
