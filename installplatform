@@ -51,6 +51,7 @@ for SUBST in $SUBSTS ; do
     s390x-linux) LIB=lib64 ;;
     ppc64-linux|powerpc64-linux) LIB=lib64 ;;
     x86_64-linux|amd64-linux|ia32e-linux) LIB=lib64 ;;
+    mips*-linux) LIB=lib ;;
     *) LIB=lib;;
   esac
 
@@ -106,6 +107,11 @@ for SUBST in $SUBSTS ; do
     alpha*)
 	ISANAME=alpha
 	ISABITS=64
+	;;
+    mips*)
+	# We assume N32 first
+	ISANAME=mips
+	ISABITS=32
 	;;
   esac
 
