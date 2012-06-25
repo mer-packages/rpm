@@ -66,6 +66,10 @@ optflags: armv5tel -O2 -g -march=armv5te
 optflags: armv5tejl -O2 -g -march=armv5te
 optflags: armv6l -O2 -g -march=armv6
 optflags: armv7l -O2 -g -march=armv7
+optflags: armv7hl -O2 -g -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -mno-thumb
+optflags: armv7nhl -O2 -g -march=armv7-a -mfloat-abi=hard -mfpu=neon -mno-thumb
+optflags: armv7thl -O2 -g -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -mthumb
+optflags: armv7tnhl -O2 -g -march=armv7-a -mfloat-abi=hard -mfpu=neon -mthumb
 
 optflags: atarist -O2 -g -fomit-frame-pointer
 optflags: atariste -O2 -g -fomit-frame-pointer
@@ -140,6 +144,11 @@ arch_canon:     armv5tel: armv5tel 	12
 arch_canon:     armv5tejl: armv5tejl 	12
 arch_canon:     armv6l: armv6l 	12
 arch_canon:     armv7l: armv7l 	12
+arch_canon:     armv7hl: armv7hl 	12
+arch_canon:     armv7nhl: armv7nhl 	12
+arch_canon:     armv7thl: armv7thl 	12
+arch_canon:     armv7tnhl: armv7tnhl 	12
+
 
 arch_canon:	m68kmint: m68kmint	13
 arch_canon:	atarist: m68kmint	13
@@ -248,6 +257,10 @@ buildarchtranslate: armv5tel: armv5tel
 buildarchtranslate: armv5tejl: armv5tejl
 buildarchtranslate: armv6l: armv6l
 buildarchtranslate: armv7l: armv7l
+buildarchtranslate: armv7hl: armv7hl
+buildarchtranslate: armv7nhl: armv7nhl
+buildarchtranslate: armv7thl: armv7thl
+buildarchtranslate: armv7tnhl: armv7tnhl
 
 buildarchtranslate: atarist: m68kmint
 buildarchtranslate: atariste: m68kmint
@@ -336,6 +349,10 @@ arch_compat: armv5tel: armv4tl
 arch_compat: armv4tl: armv4l
 arch_compat: armv4l: armv3l
 arch_compat: armv3l: noarch
+arch_compat: armv7tnhl: armv7nhl armv7thl
+arch_compat: armv7nhl: armv7hl
+arch_compat: armv7thl: armv7hl
+arch_compat: armv7hl: noarch
 
 arch_compat: atarist: m68kmint noarch
 arch_compat: atariste: m68kmint noarch
@@ -440,6 +457,11 @@ buildarch_compat: armv5tel: armv4tl
 buildarch_compat: armv4tl: armv4l
 buildarch_compat: armv4l: armv3l
 buildarch_compat: armv3l: noarch
+
+buildarch_compat: armv7tnhl: armv7nhl armv7thl
+buildarch_compat: armv7nhl: armv7hl
+buildarch_compat: armv7thl: armv7hl
+buildarch_compat: armv7hl: noarch
 
 buildarch_compat: hppa2.0: hppa1.2
 buildarch_compat: hppa1.2: hppa1.1
