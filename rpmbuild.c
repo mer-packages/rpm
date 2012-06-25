@@ -51,6 +51,8 @@ extern int _fsm_debug;
 static rpmSpecFlags spec_flags = 0;	/*!< Bit(s) to control spec parsing. */
 static int noDeps = 0;			/*!< from --nodeps */
 static int shortCircuit = 0;		/*!< from --short-circuit */
+static int skipClean = 0;		/*!< from --skip-clean */
+static int skipPrep = 0;		/*!< from --skip-prep */
 static char buildMode = 0;		/*!< Build mode (one of "btBC") */
 static char buildChar = 0;		/*!< Build stage (one of "abcilps ") */
 static ARGV_t build_targets = NULL;	/*!< Target platform(s) */
@@ -190,6 +192,10 @@ static struct poptOption rpmBuildPoptTable[] = {
 	N_("remove specfile when done"), NULL},
  { "short-circuit", '\0', POPT_ARG_VAL, &shortCircuit,  1,
 	N_("skip straight to specified stage (only for c,i)"), NULL },
+ { "skip-clean", '\0', POPT_ARG_VAL, &skipClean,  1,
+	N_("skip %clean on binary build to permit BUILDROOT reuse"), NULL },
+ { "skip-prep", '\0', POPT_ARG_VAL, &skipPrep,  1,
+	N_("skip %prep section when doing tasks that normally include it"), NULL },
  { "target", '\0', POPT_ARG_STRING, 0,  POPT_TARGETPLATFORM,
 	N_("override target platform"), "CPU-VENDOR-OS" },
    POPT_TABLEEND
@@ -591,7 +597,8 @@ int main(int argc, char *argv[])
 	    ba->buildAmount |= RPMBUILD_PACKAGESOURCE;
 	case 'b':
 	    ba->buildAmount |= RPMBUILD_PACKAGEBINARY;
-	    ba->buildAmount |= RPMBUILD_CLEAN;
+	    if (!skipClean)
+			ba->buildAmount |= RPMBUILD_CLEAN;
 	    if ((buildChar == 'b') && shortCircuit)
 		break;
 	case 'i':
@@ -604,7 +611,8 @@ int main(int argc, char *argv[])
 	    if ((buildChar == 'c') && shortCircuit)
 		break;
 	case 'p':
-	    ba->buildAmount |= RPMBUILD_PREP;
+	    if (!skipPrep)
+	        ba->buildAmount |= RPMBUILD_PREP;
 	    break;
 	    
 	case 'l':
