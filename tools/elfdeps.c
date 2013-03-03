@@ -14,6 +14,7 @@
 
 int filter_private = 0;
 int soname_only = 0;
+int assume_exec = 0;
 
 typedef struct elfInfo_s {
     Elf *elf;
@@ -226,7 +227,7 @@ static int processFile(const char *fn, int dtype)
 	ei->isElf64 = 0;
 #endif
     	ei->isDSO = (ehdr->e_type == ET_DYN);
-	ei->isExec = (st.st_mode & (S_IXUSR|S_IXGRP|S_IXOTH));
+	ei->isExec = assume_exec || (st.st_mode & (S_IXUSR|S_IXGRP|S_IXOTH));
 
 	processSections(ei);
     }
@@ -279,6 +280,7 @@ int main(int argc, char *argv[])
 	{ "requires", 'R', POPT_ARG_VAL, &requires, -1, NULL, NULL },
 	{ "filter-private", 0, POPT_ARG_VAL, &filter_private, -1, NULL, NULL },
 	{ "soname-only", 0, POPT_ARG_VAL, &soname_only, -1, NULL, NULL },
+	{ "assume-exec", 0, POPT_ARG_VAL, &assume_exec, -1, NULL, NULL },
 	POPT_AUTOHELP 
 	POPT_TABLEEND
     };
