@@ -16,6 +16,12 @@ VENDOR="`$RPM --eval '%{_vendor}'`"
 OS="`$RPM --eval '%{_os}'`"
 RPMRC_GNU="`$RPM --eval '%{_gnu}'`"
 
+# In case we want to override --cvm
+arch="${4:-$arch}"
+VENDOR="${5:-$VENDOR}"
+OS="${6:-$OS}"
+RPMRC_GNU=${7:-$RPMRC_GNU}
+
 case "$arch" in
   i[3456]86|pentium[34]|athlon|geode) SUBSTS='s_i386_i386_ s_i386_i486_ s_i386_i586_ s_i386_i686_ s_i386_pentium3_ s_i386_pentium4_ s_i386_athlon_ s_i386_geode_' ;;
   alpha*) SUBSTS='s_alpha_alpha_ s_alpha_alphaev5_ s_alpha_alphaev56_ s_alpha_alphapca56_ s_alpha_alphaev6_ s_alpha_alphaev67_' ;;
@@ -157,6 +163,10 @@ for SUBST in $SUBSTS ; do
   > ${PPD}/macros
 
 done
+
+if [ -n "$4" ]; then
+	exit 0
+fi
 
 { cd ${DESTDIR}/${platformdir}
   [ -L noarch-${OS} ] && rm -f noarch-${OS} 2>/dev/null
